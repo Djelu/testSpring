@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class T1000Pool implements RobotPool {
 
-    private  Map<String, Robot> robotCollection;
+/*    private  Map<String, Robot> robotCollection;
 
     public T1000Pool(Map<String, Robot> robotCollection) {
         this.robotCollection = robotCollection;
@@ -31,6 +31,27 @@ public class T1000Pool implements RobotPool {
             System.out.println("key: " + entry.getKey());
             System.out.println("value: ");
             Robot robot = entry.getValue();
+            robot.action();
+            robot.printPars();
+        }
+    }*/
+    private Collection<Robot> robotCollection;
+
+    public T1000Pool(Collection<Robot> robotCollection) {
+        this.robotCollection = robotCollection;
+    }
+
+    @Override
+    public Collection<Robot> getRobotCollection() {
+        return robotCollection;
+    }
+
+    public void setRobotCollection( Collection<Robot> robotCollection) {
+        this.robotCollection = robotCollection;
+    }
+
+    public void action() {
+        for(Robot robot: robotCollection){
             robot.action();
             robot.printPars();
         }

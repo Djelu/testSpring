@@ -16,7 +16,11 @@ public class Start {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("all_context.xml");
 
-        T1000Pool t1000Pool = (T1000Pool) context.getBean("t1000Pool");
+        T1000Pool t1000Pool = (T1000Pool) context.getBean("t1000GoldenPool");
         t1000Pool.action();
+
+//        ModelT1000 t1000 = (ModelT1000) context.getBean("t1000");
+//        t1000.action();
+//        t1000.printPars();
     }
 }

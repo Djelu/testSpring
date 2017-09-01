@@ -7,6 +7,6 @@
 >
 
     <bean id="sonyHand" class="com.fantasy.impls.sony.SonyHand"/>
-    <bean id="sonyHead" class="com.fantasy.impls.sony.SonyHead"/>
-    <bean id="sonyLeg"  class="com.fantasy.impls.sony.SonyLeg" />
+    <!--<bean id="sonyHead" class="com.fantasy.impls.sony.SonyHead"/>-->
+    <!--<bean id="sonyLeg"  class="com.fantasy.impls.sony.SonyLeg" />-->
 </beans>

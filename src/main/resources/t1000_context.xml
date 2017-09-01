@@ -12,58 +12,46 @@
     <import resource="toshiba_context.xml"/>
     <import resource="db_context.xml"/>
 
-    <bean id="replacer" class="com.fantasy.replacer.Replacer"/>
-
     <bean id="t1000" class="com.fantasy.impls.robot.ModelT1000"
           parent="baseModel"
           scope="prototype"
+          autowire="byType"
     >
         <!--<replaced-method name="action" replacer="replacer"/>-->
 
-        <constructor-arg value="silver" index="3"/>
-        <constructor-arg value="2006" index="4"/>
-        <constructor-arg value="true" index="5"/>
+        <!--<constructor-arg value="silver" index="3" type="java.lang.String"/>-->
+        <!--<constructor-arg value="2006" index="4" type="int"/>-->
+        <!--<constructor-arg value="true" index="5" type="boolean"/>-->
+        <property name="color" value="silver"/>
+        <property name="year" value="2006"/>
+        <property name="soundEnabled" value="true"/>
+    </bean>
+
+    <bean id="t1100" class="com.fantasy.impls.robot.ModelT1000"
+          parent="baseModel"
+          scope="prototype"
+          autowire="byType"
+    >
+        <!--<replaced-method name="action" replacer="replacer"/>-->
+
+        <!--<constructor-arg value="silver" index="3" type="java.lang.String"/>-->
+        <!--<constructor-arg value="2006" index="4" type="int"/>-->
+        <!--<constructor-arg value="true" index="5" type="boolean"/>-->
+        <property name="color" value="gold"/>
+        <property name="year"  value="2007"/>
+        <property name="soundEnabled" value="false"/>
     </bean>
 
     <bean id="baseModel" class="com.fantasy.impls.robot.ModelT1000"
           abstract="true"
     >
+        <!--<constructor-arg ref="sonyHand" index="0"/>-->
+        <!--<constructor-arg ref="sonyLeg" index="1"/>-->
+        <!--<constructor-arg ref="toshibaHead" index="2"/>-->
 
-        <constructor-arg ref="sonyHand" index="0"/>
-        <constructor-arg ref="sonyLeg" index="1"/>
-        <constructor-arg ref="toshibaHead" index="2"/>
-
-        <property name="hand" ref="toshibaHand"/>
+        <!--<property name="hand" ref="toshibaHand"/>-->
     </bean>
 
-    <bean id="t1000Pool" class="com.fantasy.impls.pool.T1000Pool">
-        <constructor-arg name="robotCollection">
-            <map>
-                <entry key="2005" value-ref="t1000"/>
-                <entry key="2006" value-ref="t1000"/>
-                <entry key="2005">
-                    <bean class="com.fantasy.impls.robot.ModelT1000"
-                          parent="baseModel"
-                    >
-                        <constructor-arg value="gold" index="3"/>
-                        <constructor-arg value="2007" index="4"/>
-                        <constructor-arg value="false" index="5"/>
-                    </bean>
-                </entry>
-            </map>
-<!--            <list>
-                <ref bean="t1000"/>
-                <bean class="com.fantasy.impls.robot.ModelT1000"
-                      parent="baseModel"
-                      scope="prototype"
-                >
-                    <constructor-arg value="gold" index="3"/>
-                    <constructor-arg value="2007" index="4"/>
-                    <constructor-arg value="false" index="5"/>
-                </bean>
-            </list>-->
-        </constructor-arg>
-    </bean>
 
 
 </beans>

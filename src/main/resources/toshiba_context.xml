@@ -6,7 +6,7 @@
        default-lazy-init="true"
 >
 
-    <bean id="toshibaHand" class="com.fantasy.impls.toshiba.ToshibaHand"/>
+    <!--<bean id="toshibaHand" class="com.fantasy.impls.toshiba.ToshibaHand"/>-->
     <bean id="toshibaHead" class="com.fantasy.impls.toshiba.ToshibaHead"/>
     <bean id="toshibaLeg"  class="com.fantasy.impls.toshiba.ToshibaLeg" />
 </beans>
