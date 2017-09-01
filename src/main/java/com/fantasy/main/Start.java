@@ -19,8 +19,13 @@ public class Start {
 //        T1000Pool t1000Pool = (T1000Pool) context.getBean("t1000GoldenPool");
 //        t1000Pool.action();
 
-        ModelT1000 t1000 = (ModelT1000) context.getBean("t1000");
+        ModelT1000 t1000 = (ModelT1000) context.getBean("beanModel1");
+        ModelT1000 t1100 = (ModelT1000) context.getBean("beanModel2");
+
         t1000.action();
         t1000.printPars();
+
+        t1100.action();
+        t1100.printPars();
     }
 }

@@ -1,17 +1,39 @@
 package com.fantasy.impls.robot;
 
+import com.fantasy.impls.enums.ColorStyle;
 import com.fantasy.interfaces.Hand;
 import com.fantasy.interfaces.Head;
 import com.fantasy.interfaces.Leg;
-import com.fantasy.interfaces.Robot;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
 
-public class ModelT1000 extends BaseModal implements InitializingBean, DisposableBean{
+@Configuration
+//@ComponentScan(
+//        basePackages = "com.fantasy",
+//        includeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "/*.*Pool*"))
+@Qualifier(value = "t1000")
+public class ModelT1000 extends BaseModel implements InitializingBean, DisposableBean{
 
-	private String color;
+	private ColorStyle color;
 	private int year;
 	private boolean soundEnabled;
+
+	@Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+	public ModelT1000 beanModel1(){
+        return new ModelT1000();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+    public ModelT1000 beanModel2(){
+        return new ModelT1000(ColorStyle.BLACK, 2005, true);
+    }
 
 	public ModelT1000() {
 	}
@@ -20,13 +42,13 @@ public class ModelT1000 extends BaseModal implements InitializingBean, Disposabl
 		super(hand, leg, head);
 	}
 
-	public ModelT1000(String color, int year, boolean soundEnabled) {
+	public ModelT1000(ColorStyle color, int year, boolean soundEnabled) {
 		this.color = color;
 		this.year = year;
 		this.soundEnabled = soundEnabled;
 	}
 
-	public ModelT1000(Hand hand, Leg leg, Head head, String color, int year, boolean soundEnabled) {
+	public ModelT1000(Hand hand, Leg leg, Head head, ColorStyle color, int year, boolean soundEnabled) {
 		super(hand,leg,head);
 
 		this.color = color;
@@ -35,7 +57,8 @@ public class ModelT1000 extends BaseModal implements InitializingBean, Disposabl
 	}
 
 	public void action() {
-		getHand().catchSomething();
+        System.out.println();
+        getHand().catchSomething();
 		getLeg().go();
 		getHead().calc();
 	}
@@ -50,11 +73,11 @@ public class ModelT1000 extends BaseModal implements InitializingBean, Disposabl
 		System.out.println("can play sound: " + soundEnabled);
 	}
 
-	public String getColor() {
+	public ColorStyle getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
+	public void setColor(ColorStyle color) {
 		this.color = color;
 	}
 

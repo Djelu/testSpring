@@ -9,7 +9,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
-public abstract class BaseModal implements Robot{
+public abstract class BaseModel implements Robot{
 
 	@Autowired
 	private Hand hand;
@@ -18,11 +18,11 @@ public abstract class BaseModal implements Robot{
 	@Autowired
 	private Head head;
 
-	public BaseModal() {
+	public BaseModel() {
 	}
 
 	@Autowired
-	public BaseModal(Hand hand, Leg leg, Head head) {
+	public BaseModel(Hand hand, Leg leg, Head head) {
 		super();
 		this.hand = hand;
 		this.leg = leg;
