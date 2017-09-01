@@ -6,16 +6,22 @@ import com.fantasy.interfaces.Leg;
 import com.fantasy.interfaces.Robot;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 
 public abstract class BaseModal implements Robot{
 
+	@Autowired
 	private Hand hand;
+	@Autowired
 	private Leg leg;
+	@Autowired
 	private Head head;
 
 	public BaseModal() {
 	}
 
+	@Autowired
 	public BaseModal(Hand hand, Leg leg, Head head) {
 		super();
 		this.hand = hand;

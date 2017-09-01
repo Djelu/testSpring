@@ -1,75 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:c="http://www.springframework.org/schema/c"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd"
 
-       default-lazy-init="true"
->
+       default-lazy-init="true">
+    <context:annotation-config/>
 
-    <import resource="t1000_context.xml"/>
+    <import resource="sony_context.xml"/>
+    <import resource="toshiba_context.xml"/>
 
-    <bean id="beanPostProcessor" class="com.fantasy.processors.beanPostProcessor"/>
+    <bean id="t1000" class="com.fantasy.impls.robot.ModelT1000" scope="prototype">
 
-    <bean id="t1000Conveyor" class="com.fantasy.impls.conveyor.T1000Conveyor">
-        <lookup-method name="createRobot" bean="t1000"/>
     </bean>
 
-    <bean id="replacer" class="com.fantasy.replacer.Replacer"/>
-
-    <bean id="t1000Pool" class="com.fantasy.impls.pool.T1000Pool" autowire="constructor">
-        <!--<constructor-arg name="robotCollection">-->
-            <!--<list>-->
-                <!--<entry key="2005" value-ref="t1000"/>-->
-                <!--<entry key="2006" value-ref="t1000"/>-->
-                <!--<entry key="2005">-->
-                    <!--<bean class="com.fantasy.impls.robot.ModelT1000"-->
-                          <!--parent="baseModel"-->
-                    <!--&gt;-->
-                        <!--<constructor-arg value="gold" index="3"/>-->
-                        <!--<constructor-arg value="2007" index="4"/>-->
-                        <!--<constructor-arg value="false" index="5"/>-->
-                    <!--</bean>-->
-                <!--</entry>-->
-            <!--</list>-->
-            <!--<list>-->
-                <!--<ref bean="t1000"/>-->
-                <!--<bean class="com.fantasy.impls.robot.ModelT1000"-->
-                      <!--parent="baseModel"-->
-                      <!--scope="prototype"-->
-                <!--&gt;-->
-                    <!--<constructor-arg value="gold"  index="3" type="java.lang.String"/>-->
-                    <!--<constructor-arg value="2007"  index="4" type="int"/>-->
-                    <!--<constructor-arg value="false" index="5" type="boolean"/>-->
-                <!--</bean>-->
-            <!--</list>-->
-        <!--</constructor-arg>-->
-    </bean>
-
-    <bean id="t1000GoldenPool" class="com.fantasy.impls.pool.T1000Pool">
-        <constructor-arg name="robotCollection"
-                         value="#{t1000Pool.robotCollection}">
-        </constructor-arg>
-    </bean>
-
-    <!--<bean id="arrayList" class="java.util.ArrayList" autowire-candidate="true">-->
-        <!--<constructor-arg>-->
-            <!--<list value-type="com.fantasy.impls.robot.ModelT1000">-->
-                <!--&lt;!&ndash;<ref bean="t1000" />&ndash;&gt;-->
-                <!--<bean class="com.fantasy.impls.robot.ModelT1000"-->
-                      <!--parent="baseModel"-->
-                      <!--scope="prototype"-->
-                      <!--autowire="byType"-->
-                <!--&gt;-->
-                    <!--&lt;!&ndash;<constructor-arg value="gold"  index="3" type="java.lang.String"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<constructor-arg value="2007"  index="4" type="int"/>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<constructor-arg value="false" index="5" type="boolean"/>&ndash;&gt;-->
-                    <!--<property name="color" value="gold"/>-->
-                    <!--<property name="year"  value="2007"/>-->
-                    <!--<property name="soundEnabled" value="false"/>-->
-                <!--</bean>-->
-            <!--</list>-->
-        <!--</constructor-arg>-->
-    <!--</bean>-->
 </beans>
