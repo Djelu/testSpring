@@ -1,31 +1,23 @@
 package com.fantasy.main;
 
-import com.fantasy.impls.pool.T1000Pool;
+import com.fantasy.aop.objects.CustomFileFilter;
+import com.fantasy.aop.objects.FileManager;
+import com.fantasy.aop.objects.SomeService;
 import com.fantasy.impls.robot.ModelT1000;
-import com.fantasy.interfaces.Robot;
-import com.fantasy.interfaces.RobotConveyor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.ArrayList;
 
 /**
  * Created by Djelu on 31.08.2017.
  */
 public class Start {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("all_context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("AOPContext.xml");
 
-//        T1000Pool t1000Pool = (T1000Pool) context.getBean("t1000GoldenPool");
-//        t1000Pool.action();
+        FileManager fileManager = (FileManager) context.getBean("fileManager");
 
-        ModelT1000 t1000 = (ModelT1000) context.getBean("beanModel1");
-        ModelT1000 t1100 = (ModelT1000) context.getBean("beanModel2");
+        fileManager.getExtensionCount("c:\\Windows\\System32");
+        fileManager.getExtensionCount("c:\\Windows\\");
 
-        t1000.action();
-        t1000.printPars();
-
-        t1100.action();
-        t1100.printPars();
     }
 }

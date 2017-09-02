@@ -9,19 +9,21 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 
+import javax.inject.Inject;
+
 public abstract class BaseModel implements Robot{
 
-	@Autowired
+	@Inject
 	private Hand hand;
-	@Autowired
+	@Inject
 	private Leg leg;
-	@Autowired
+	@Inject
 	private Head head;
 
 	public BaseModel() {
 	}
 
-	@Autowired
+	@Inject
 	public BaseModel(Hand hand, Leg leg, Head head) {
 		super();
 		this.hand = hand;

@@ -12,12 +12,16 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Named;
+import javax.persistence.NamedEntityGraph;
+
+
 @Configuration
 //@ComponentScan(
 //        basePackages = "com.fantasy",
 //        includeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "/*.*Pool*"))
-@Qualifier(value = "t1000")
-public class ModelT1000 extends BaseModel implements InitializingBean, DisposableBean{
+@Named(value = "t1000")
+public class ModelT1000 extends BaseModel/* implements InitializingBean, DisposableBean*/{
 
 	private ColorStyle color;
 	private int year;
