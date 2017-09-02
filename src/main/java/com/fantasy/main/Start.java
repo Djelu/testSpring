@@ -17,7 +17,6 @@ public class Start {
         FileManager fileManager = (FileManager) context.getBean("fileManager");
 
         fileManager.getExtensionCount("c:\\Windows\\System32");
-        fileManager.getExtensionCount("c:\\Windows\\");
-
+        fileManager.getExtensionList("c:\\Windows\\");
     }
 }

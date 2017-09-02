@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 public class FileManager {
 
 	@ShowTime
-	@ShowResult
 	public Set<String> getExtensionList(String folder) {
 		File dir = new File(folder);
 

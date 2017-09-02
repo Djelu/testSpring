@@ -1,9 +1,8 @@
-package com.fantasy.processors;
+package com.fantasy.aop.processors;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by Djelu on 31.08.2017.

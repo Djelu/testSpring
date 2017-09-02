@@ -10,24 +10,8 @@
             http://www.springframework.org/schema/context/spring-context.xsd
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop.xsd"
-
-       default-lazy-init="true"
 >
-
     <context:component-scan base-package="com.fantasy.aop.*"/>
-
-    <aop:config>
-        <aop:aspect id="log" ref="logger">
-            <aop:pointcut id="allMethods" expression="execution(* *(..))"/>
-            <aop:before pointcut-ref="allMethods" method="init"/>
-            <aop:after pointcut-ref="allMethods" method="close"/>
-            <aop:after-returning pointcut-ref="allMethods" method="printValue" returning="obj"/>
-            <aop:after-throwing pointcut-ref="allMethods" method="ex" throwing="ex"/>
-            <aop:around pointcut-ref="allMethods" method="watchTime"/>
-            <aop:after-returning pointcut-ref="allMethods" method="print" returning="obj"/>
-        </aop:aspect>
-    </aop:config>
-
-
+    <aop:aspectj-autoproxy />
 
 </beans>
