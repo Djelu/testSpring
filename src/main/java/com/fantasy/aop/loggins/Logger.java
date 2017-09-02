@@ -40,6 +40,7 @@ public class Logger {
     @Around("allMethods() && execution(java.util.Map *(..))")
     public Object watchTime(ProceedingJoinPoint joinPoint){
         long start = System.currentTimeMillis();
+
         System.out.println("method begin: " + joinPoint.getSignature().toShortString());
         Object output = null;
 
@@ -48,7 +49,7 @@ public class Logger {
         }
 
         try {
-            output = joinPoint.proceed();
+            output = joinPoint.proceed();//точка запуска
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -59,30 +60,11 @@ public class Logger {
         return output;
     }
 
-    @AfterReturning(pointcut = "allMethods() && @annotation(com.fantasy.aop.annotations.ShowResult)", returning = "obj")
-    public void print(Object obj){
-        System.out.println("Print info begin:");
-
-        if(obj instanceof Set){
-            Set set = (Set) obj;
-            for(Object object: set){
-                System.out.println(object);
-            }
-        } else  if(obj instanceof Map){
-            Map map = (Map) obj;
-            for(Object object: map.keySet()){
-                System.out.println("key= " + object + ", " + map.get(object));
-            }
-        }
-
-        System.out.println("Print info end.");
-        System.out.println();
-    }
-
     @SuppressWarnings("rawtypes")
-    @AfterReturning(pointcut = "allMethods() && execution(java.util.Map *(..))", returning = "obj")
-    public void printMap(Object obj){
+    @AfterReturning(pointcut = "allMethods() && execution(java.util.Map *(String)) && args(folder)", returning = "obj")
+    public void printMap(Object obj, String folder){
         System.out.println("Printing map:");
+        System.out.println("Folder = " + folder);
 
         Map map = (Map) obj;
         for(Object object: map.keySet()){
@@ -94,9 +76,10 @@ public class Logger {
     }
 
     @SuppressWarnings("rawtypes")
-    @AfterReturning(pointcut = "allMethods() && execution(java.util.Set *(..))", returning = "obj")
-    public void printSet(Object obj){
+    @AfterReturning(pointcut = "allMethods() && execution(java.util.Set *(String)) && args(folder)", returning = "obj")
+    public void printSet(Object obj, String folder){
         System.out.println("Printing set:");
+        System.out.println("Folder = " + folder);
 
         Set set = (Set) obj;
         for(Object object: set){
