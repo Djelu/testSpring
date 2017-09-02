@@ -17,7 +17,7 @@ import java.util.Set;
 @Aspect
 public class Logger {
 
-    @Pointcut("execution(* *(..)) && within(com.fantasy.aop.objects.*)")
+    @Pointcut("execution(* com.fantasy.aop.objects.interfaces.Manager.*(..))")
     private void allMethods(){
     }
 

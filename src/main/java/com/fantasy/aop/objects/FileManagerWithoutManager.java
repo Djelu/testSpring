@@ -1,5 +1,10 @@
 package com.fantasy.aop.objects;
 
+import com.fantasy.aop.annotations.ShowResult;
+import com.fantasy.aop.annotations.ShowTime;
+import com.fantasy.aop.objects.interfaces.Manager;
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
@@ -7,13 +12,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.fantasy.aop.annotations.ShowResult;
-import com.fantasy.aop.annotations.ShowTime;
-import com.fantasy.aop.objects.interfaces.Manager;
-import org.springframework.stereotype.Component;
-
 @Component
-public class FileManager implements Manager {
+public class FileManagerWithoutManager{
 
 	@ShowTime
 	public Set<String> getExtensionList(String folder) {
