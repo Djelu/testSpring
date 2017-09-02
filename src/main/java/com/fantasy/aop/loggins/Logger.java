@@ -37,7 +37,7 @@ public class Logger {
         System.out.println("ex: " + ex);
     }
 
-    @Around("allMethods() && @annotation(com.fantasy.aop.annotations.ShowTime)")
+    @Around("allMethods() && execution(java.util.Map *(..))")
     public Object watchTime(ProceedingJoinPoint joinPoint){
         long start = System.currentTimeMillis();
         System.out.println("method begin: " + joinPoint.getSignature().toShortString());
@@ -76,6 +76,34 @@ public class Logger {
         }
 
         System.out.println("Print info end.");
+        System.out.println();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @AfterReturning(pointcut = "allMethods() && execution(java.util.Map *(..))", returning = "obj")
+    public void printMap(Object obj){
+        System.out.println("Printing map:");
+
+        Map map = (Map) obj;
+        for(Object object: map.keySet()){
+            System.out.println("key= " + object + ", " + map.get(object));
+        }
+
+        System.out.println("End printing map.");
+        System.out.println();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @AfterReturning(pointcut = "allMethods() && execution(java.util.Set *(..))", returning = "obj")
+    public void printSet(Object obj){
+        System.out.println("Printing set:");
+
+        Set set = (Set) obj;
+        for(Object object: set){
+            System.out.println(object);
+        }
+
+        System.out.println("End printing set.");
         System.out.println();
     }
 }
