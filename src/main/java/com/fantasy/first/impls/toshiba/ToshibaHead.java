@@ -1,6 +1,6 @@
-package com.fantasy.impls.toshiba;
+package com.fantasy.first.impls.toshiba;
 
-import com.fantasy.interfaces.Head;
+import com.fantasy.first.interfaces.Head;
 
 public class ToshibaHead implements Head{
 	

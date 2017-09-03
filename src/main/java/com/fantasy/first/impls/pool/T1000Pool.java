@@ -1,10 +1,9 @@
-package com.fantasy.impls.pool;
+package com.fantasy.first.impls.pool;
 
-import com.fantasy.interfaces.Robot;
-import com.fantasy.interfaces.RobotPool;
+import com.fantasy.first.interfaces.Robot;
+import com.fantasy.first.interfaces.RobotPool;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by Djelu on 01.09.2017.

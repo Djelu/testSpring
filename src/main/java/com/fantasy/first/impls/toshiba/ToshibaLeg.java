@@ -1,6 +1,6 @@
-package com.fantasy.impls.toshiba;
+package com.fantasy.first.impls.toshiba;
 
-import com.fantasy.interfaces.Leg;
+import com.fantasy.first.interfaces.Leg;
 
 public class ToshibaLeg implements Leg {
 	

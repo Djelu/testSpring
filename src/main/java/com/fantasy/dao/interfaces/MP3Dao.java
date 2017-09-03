@@ -10,9 +10,12 @@ import java.util.Map;
  */
 public interface MP3Dao {
 
+    int insertAndGetCount(MP3 mp3);
     int insertAndGetId(MP3 mp3);
     void insert(List<MP3> mp3List);
     void insert(MP3 mp3);
+    int insertList(List<MP3> mp3List);
+    int updateList(List<MP3> mp3List);
 
     void delete(int id);
     void delete(MP3 mp3);

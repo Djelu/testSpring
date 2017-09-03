@@ -1,4 +1,4 @@
-package com.fantasy.replacer;
+package com.fantasy.first.replacer;
 
 import org.springframework.beans.factory.support.MethodReplacer;
 

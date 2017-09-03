@@ -1,4 +1,4 @@
-package com.fantasy.interfaces;
+package com.fantasy.first.interfaces;
 
 public interface Leg {
 	

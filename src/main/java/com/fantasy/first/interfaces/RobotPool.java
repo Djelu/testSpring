@@ -1,7 +1,6 @@
-package com.fantasy.interfaces;
+package com.fantasy.first.interfaces;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by Djelu on 01.09.2017.

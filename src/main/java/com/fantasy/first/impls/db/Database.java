@@ -1,4 +1,4 @@
-package com.fantasy.impls.db;
+package com.fantasy.first.impls.db;
 
 /**
  * Created by Djelu on 31.08.2017.

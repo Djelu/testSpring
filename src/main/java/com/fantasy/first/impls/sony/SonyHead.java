@@ -1,7 +1,6 @@
-package com.fantasy.impls.sony;
+package com.fantasy.first.impls.sony;
 
-import com.fantasy.interfaces.Head;
-import org.springframework.stereotype.Component;
+import com.fantasy.first.interfaces.Head;
 
 import javax.inject.Named;
 

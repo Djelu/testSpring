@@ -1,4 +1,4 @@
-package com.fantasy.impls.enums;
+package com.fantasy.first.impls.enums;
 
 public enum ColorStyle {
 

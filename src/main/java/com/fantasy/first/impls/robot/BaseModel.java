@@ -1,13 +1,9 @@
-package com.fantasy.impls.robot;
+package com.fantasy.first.impls.robot;
 
-import com.fantasy.interfaces.Hand;
-import com.fantasy.interfaces.Head;
-import com.fantasy.interfaces.Leg;
-import com.fantasy.interfaces.Robot;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
+import com.fantasy.first.interfaces.Hand;
+import com.fantasy.first.interfaces.Head;
+import com.fantasy.first.interfaces.Leg;
+import com.fantasy.first.interfaces.Robot;
 
 import javax.inject.Inject;
 

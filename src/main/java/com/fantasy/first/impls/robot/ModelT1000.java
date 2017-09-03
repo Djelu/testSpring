@@ -1,19 +1,13 @@
-package com.fantasy.impls.robot;
+package com.fantasy.first.impls.robot;
 
-import com.fantasy.impls.enums.ColorStyle;
-import com.fantasy.interfaces.Hand;
-import com.fantasy.interfaces.Head;
-import com.fantasy.interfaces.Leg;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.fantasy.first.impls.enums.ColorStyle;
+import com.fantasy.first.interfaces.Hand;
+import com.fantasy.first.interfaces.Head;
+import com.fantasy.first.interfaces.Leg;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.*;
-import org.springframework.stereotype.Component;
 
 import javax.inject.Named;
-import javax.persistence.NamedEntityGraph;
 
 
 @Configuration

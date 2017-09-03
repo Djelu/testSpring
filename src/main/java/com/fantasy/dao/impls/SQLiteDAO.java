@@ -16,6 +16,10 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
@@ -24,20 +28,31 @@ import org.springframework.stereotype.Component;
 public class SQLiteDAO implements MP3Dao {
 
 	private NamedParameterJdbcTemplate jdbcTemplate;
+	private SimpleJdbcInsert insertMP3;
+	private SimpleJdbcCall jdbcCall;
+	private DataSource dataSource;
 
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		this.insertMP3 = new SimpleJdbcInsert(dataSource).withTableName("mp3").usingColumns("name","author");
+		this.dataSource = dataSource;
 	}
 
 	public void insert(MP3 mp3) {
-		String sql = "insert into mp3 (name, author) VALUES (:name, :author)";
-
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", mp3.getName());
 		params.addValue("author", mp3.getAuthor());
 
-		jdbcTemplate.update(sql,params);
+		insertMP3.execute(params);
+	}
+
+	public int insertAndGetCount(MP3 mp3) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("name", mp3.getName());
+		params.addValue("author", mp3.getAuthor());
+
+		return insertMP3.execute(params);
 	}
 
 	public int insertAndGetId(MP3 mp3){
@@ -59,39 +74,39 @@ public class SQLiteDAO implements MP3Dao {
 		}
 	}
 
-	public void insertWithJDBC(MP3 mp3) {
+	public int insertList(List<MP3> mp3List) {
+		String sql = "insert into mp3(author, name) values(:author, :name)";
 
-		Connection conn = null;
+		SqlParameterSource[] pars = new SqlParameterSource[mp3List.size()];
 
-		try {
-			Class.forName("org.sqlite.JDBC");
-			String url = "jdbc:sqlite:db/SpringDB.db";
-			conn = DriverManager.getConnection(url, "", "");
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
+		int i=0;
+		for (MP3 mp3: mp3List){
+			MapSqlParameterSource params = new MapSqlParameterSource();
+			params.addValue("name", mp3.getName());
+			params.addValue("author", mp3.getAuthor());
+
+			pars[i++] = params;
 		}
 
-		String sql = "insert into mp3 (name, author) VALUES (?, ?)";
+		return jdbcTemplate.batchUpdate(sql, pars).length;
+	}
 
-		try {
-			assert conn != null;
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, mp3.getName());
-			ps.setString(2, mp3.getAuthor());
-			ps.executeUpdate();
-			ps.close();
+	public int updateList(List<MP3> mp3List) {
+		String sql = "update mp3 set author=:author, name=:name where id=:id";
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		SqlParameterSource[] pars = new SqlParameterSource[mp3List.size()];
 
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-				}
-			}
+		int i=0;
+		for (MP3 mp3: mp3List){
+			MapSqlParameterSource params = new MapSqlParameterSource();
+			params.addValue("id", mp3.getId());
+			params.addValue("name", mp3.getName());
+			params.addValue("author", mp3.getAuthor());
+
+			pars[i++] = params;
 		}
+
+		return jdbcTemplate.batchUpdate(sql, pars).length;
 	}
 
 	public void delete(MP3 mp3) {

@@ -1,7 +1,7 @@
-package com.fantasy.impls.conveyor;
+package com.fantasy.first.impls.conveyor;
 
-import com.fantasy.interfaces.Robot;
-import com.fantasy.interfaces.RobotConveyor;
+import com.fantasy.first.interfaces.Robot;
+import com.fantasy.first.interfaces.RobotConveyor;
 
 /**
  * Created by Djelu on 31.08.2017.

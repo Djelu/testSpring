@@ -1,7 +1,6 @@
-package com.fantasy.impls.toshiba;
+package com.fantasy.first.impls.toshiba;
 
-import com.fantasy.interfaces.Hand;
-import org.springframework.stereotype.Component;
+import com.fantasy.first.interfaces.Hand;
 
 import javax.inject.Named;
 

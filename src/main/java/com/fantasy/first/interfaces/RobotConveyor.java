@@ -1,4 +1,4 @@
-package com.fantasy.interfaces;
+package com.fantasy.first.interfaces;
 
 /**
  * Created by Djelu on 31.08.2017.

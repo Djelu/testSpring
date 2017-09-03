@@ -1,6 +1,6 @@
-package com.fantasy.impls.sony;
+package com.fantasy.first.impls.sony;
 
-import com.fantasy.interfaces.Hand;
+import com.fantasy.first.interfaces.Hand;
 
 public class SonyHand implements Hand{
 	
