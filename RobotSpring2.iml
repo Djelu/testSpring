@@ -9,6 +9,7 @@
           <file>file://$MODULE_DIR$/src/main/resources/t1000_context.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/all_context.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/AOPContext.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/DAOContext.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -33,6 +34,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-aspects:4.3.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.8.10" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.3.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:4.3.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:4.3.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.20.0" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:3.2.5" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ant:ant:1.9.6" level="project" />
