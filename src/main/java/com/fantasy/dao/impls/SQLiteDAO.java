@@ -24,6 +24,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component("sqliteDAO")
 public class SQLiteDAO implements MP3Dao {
@@ -57,17 +58,25 @@ public class SQLiteDAO implements MP3Dao {
 		return insertMP3.execute(params);
 	}
 
-	public int insertAndGetId(MP3 mp3){
-		String sql = "insert into mp3_view(name, author_name) values(:name, :author)";
+	@Transactional
+	public int insertAndGetId(MP3 mp3) {
+		String sqlAuhtor = "insert into author(name) values(:author_name)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("name", mp3.getName());
-		params.addValue("author", mp3.getAuthor().getName());
+		params.addValue("author_name", mp3.getAuthor().getName());
 
-		jdbcTemplate.update(sql, params, keyHolder);
-		return keyHolder.getKey().intValue();
+		jdbcTemplate.update(sqlAuhtor, params, keyHolder);
+		int author_id = keyHolder.getKey().intValue();
+
+		String sqlMP3 = "insert into mp3(name, author_id2) values(:mp3_name, :author_id)";
+
+		params = new MapSqlParameterSource();
+		params.addValue("mp3_name", mp3.getName());
+		params.addValue("author_id", author_id);
+		jdbcTemplate.update(sqlMP3, params);
+		return author_id;
 	}
 
 	public void insert(List<MP3> mp3List) {
@@ -77,8 +86,8 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	public int insertList(List<MP3> mp3List) {
-		String sql1 = "insert into author(name) VALUES (:author_name)";
-		String sql2 = "insert into mp3(author_id, name) VALUES (:author_id, :mp3_name)";
+		String sqlAuthor = "insert into author(name) VALUES (:author_name)";
+		String sqlMP3 = "insert into mp3(author_id, name) VALUES (:author_id, :mp3_name)";
 
 		SqlParameterSource[] params = new SqlParameterSource[mp3List.size()];
 
@@ -90,9 +99,10 @@ public class SQLiteDAO implements MP3Dao {
 			MapSqlParameterSource param = new MapSqlParameterSource();
 			param.addValue("author_name", mp3.getAuthor().getName());
 			KeyHolder keyHolder = new GeneratedKeyHolder();
-			jdbcTemplate.update(sql1, param, keyHolder);
+			jdbcTemplate.update(sqlAuthor, param, keyHolder);
 
-			p.addValue("author_id", keyHolder.getKey().intValue());
+			int author_id = keyHolder.getKey().intValue();
+			p.addValue("author_id", author_id);
 
 			params[i] = p;
 			i++;
@@ -100,13 +110,13 @@ public class SQLiteDAO implements MP3Dao {
 
 		// SqlParameterSource[] batch =
 		// SqlParameterSourceUtils.createBatch(listMP3.toArray());
-		jdbcTemplate.batchUpdate(sql1, params);
-		return jdbcTemplate.batchUpdate(sql2, params).length;
+
+		return jdbcTemplate.batchUpdate(sqlMP3, params).length;
 	}
 
 	public int updateList(List<MP3> mp3List) {
-		String sql1 = "update mp3 set name=:mp3_name where id=:mp3_id";
-		String sql2 = "update author set name=:author_name where id=:author_id";
+		String sqlMP3 = "update mp3 set name=:mp3_name where id=:mp3_id";
+		String sqlAuthor = "update author set name=:author_name where id=:author_id";
 
 		SqlParameterSource[] pars = new SqlParameterSource[mp3List.size()];
 
@@ -120,8 +130,8 @@ public class SQLiteDAO implements MP3Dao {
 
 			pars[i++] = params;
 		}
-		jdbcTemplate.batchUpdate(sql1, pars);
-		return jdbcTemplate.batchUpdate(sql2, pars).length;
+		jdbcTemplate.batchUpdate(sqlMP3, pars);
+		return jdbcTemplate.batchUpdate(sqlAuthor, pars).length;
 	}
 
 	public void delete(MP3 mp3) {

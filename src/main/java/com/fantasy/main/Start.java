@@ -25,6 +25,6 @@ public class Start {
         mp3s.add(new MP3(3,"Imago", new Author(3,"Catharsis")));
         mp3s.add(new MP3(3,"Pururu", new Author(3,"Ururu")));
 
-        System.out.println(mp3Dao.insertList(mp3s));
+        System.out.println(mp3Dao.insertAndGetId(new MP3(3,"Imago", new Author(3,"Catharsis"))));
     }
 }
