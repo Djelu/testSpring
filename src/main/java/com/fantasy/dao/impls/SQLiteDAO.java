@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import javax.swing.*;
 
 import com.fantasy.dao.interfaces.MP3Dao;
+import com.fantasy.dao.objects.Author;
 import com.fantasy.dao.objects.MP3;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -27,16 +28,17 @@ import org.springframework.stereotype.Component;
 @Component("sqliteDAO")
 public class SQLiteDAO implements MP3Dao {
 
+	private static final String mp3Table = "mp3";
+	private static final String mp3View = "mp3_view";
+
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	private SimpleJdbcInsert insertMP3;
 	private SimpleJdbcCall jdbcCall;
-	private DataSource dataSource;
 
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		this.insertMP3 = new SimpleJdbcInsert(dataSource).withTableName("mp3").usingColumns("name","author");
-		this.dataSource = dataSource;
 	}
 
 	public void insert(MP3 mp3) {
@@ -56,13 +58,13 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	public int insertAndGetId(MP3 mp3){
-		String sql = "insert into mp3(name, author) values(:name, :author)";
+		String sql = "insert into mp3_view(name, author_name) values(:name, :author)";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", mp3.getName());
-		params.addValue("author", mp3.getAuthor());
+		params.addValue("author", mp3.getAuthor().getName());
 
 		jdbcTemplate.update(sql, params, keyHolder);
 		return keyHolder.getKey().intValue();
@@ -75,38 +77,51 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	public int insertList(List<MP3> mp3List) {
-		String sql = "insert into mp3(author, name) values(:author, :name)";
+		String sql1 = "insert into author(name) VALUES (:author_name)";
+		String sql2 = "insert into mp3(author_id, name) VALUES (:author_id, :mp3_name)";
 
-		SqlParameterSource[] pars = new SqlParameterSource[mp3List.size()];
+		SqlParameterSource[] params = new SqlParameterSource[mp3List.size()];
 
-		int i=0;
-		for (MP3 mp3: mp3List){
-			MapSqlParameterSource params = new MapSqlParameterSource();
-			params.addValue("name", mp3.getName());
-			params.addValue("author", mp3.getAuthor());
+		int i = 0;
+		for (MP3 mp3 : mp3List) {
+			MapSqlParameterSource p = new MapSqlParameterSource();
+			p.addValue("mp3_name", mp3.getName());
 
-			pars[i++] = params;
+			MapSqlParameterSource param = new MapSqlParameterSource();
+			param.addValue("author_name", mp3.getAuthor().getName());
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			jdbcTemplate.update(sql1, param, keyHolder);
+
+			p.addValue("author_id", keyHolder.getKey().intValue());
+
+			params[i] = p;
+			i++;
 		}
 
-		return jdbcTemplate.batchUpdate(sql, pars).length;
+		// SqlParameterSource[] batch =
+		// SqlParameterSourceUtils.createBatch(listMP3.toArray());
+		jdbcTemplate.batchUpdate(sql1, params);
+		return jdbcTemplate.batchUpdate(sql2, params).length;
 	}
 
 	public int updateList(List<MP3> mp3List) {
-		String sql = "update mp3 set author=:author, name=:name where id=:id";
+		String sql1 = "update mp3 set name=:mp3_name where id=:mp3_id";
+		String sql2 = "update author set name=:author_name where id=:author_id";
 
 		SqlParameterSource[] pars = new SqlParameterSource[mp3List.size()];
 
 		int i=0;
 		for (MP3 mp3: mp3List){
 			MapSqlParameterSource params = new MapSqlParameterSource();
-			params.addValue("id", mp3.getId());
-			params.addValue("name", mp3.getName());
-			params.addValue("author", mp3.getAuthor());
+			params.addValue("mp3_id", mp3.getId());
+			params.addValue("mp3_name", mp3.getName());
+			params.addValue("author_name", mp3.getAuthor().getName());
+			params.addValue("author_id", mp3.getAuthor().getId());
 
 			pars[i++] = params;
 		}
-
-		return jdbcTemplate.batchUpdate(sql, pars).length;
+		jdbcTemplate.batchUpdate(sql1, pars);
+		return jdbcTemplate.batchUpdate(sql2, pars).length;
 	}
 
 	public void delete(MP3 mp3) {
@@ -122,11 +137,20 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	public MP3 getMP3ByID(int id) {
-		String sql = "select * from mp3 where id == :id";
+		String sql = "select * from " + mp3View + " where mp3_id == :id";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("id", id);
 
 		return jdbcTemplate.queryForObject(sql, params, new MP3RowMapper());
+	}
+
+	public int getIdAuthor(String name){
+		String sql = "select * from author where name = :name";
+
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("name", name);
+
+		return jdbcTemplate.queryForObject(sql, params, new MP3RowMapper()).getId();
 	}
 
 	public List<MP3> getMP3ListByName(String name) {
@@ -148,19 +172,19 @@ public class SQLiteDAO implements MP3Dao {
 	}
 
 	public int getMP3Count(){
-		String sql = "select count(*) from mp3";
+		String sql = "select count(*) from " + mp3Table;
 		return jdbcTemplate.getJdbcOperations().queryForObject(sql, Integer.class);
 	}
 
 	public Map<String, Integer> getStat(){
-		String sql = "select author, count(*) as count from mp3 group by author";
+		String sql = "select author, count(*) as count from " + mp3View + " group by author";
 
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, Integer>>() {
 			@Override
 			public Map<String, Integer> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
 				Map<String, Integer> map = new TreeMap<>();
 				while (resultSet.next()){
-					String author = resultSet.getString("author");
+					String author = resultSet.getString("author_name");
 					int count = resultSet.getInt("count");
 					map.put(author, count);
 				}
@@ -172,10 +196,13 @@ public class SQLiteDAO implements MP3Dao {
 	private static final class MP3RowMapper implements RowMapper<MP3> {
 		@Override
 		public MP3 mapRow(ResultSet resultSet, int i) throws SQLException {
-			int id = resultSet.getInt("id");
-			String author = resultSet.getString("author");
-			String name = resultSet.getString("name");
-			return new MP3(id, author, name);
+			int mp3_id = resultSet.getInt("mp3_id");
+			String mp3_name = resultSet.getString("mp3_name");
+
+			String author_name = resultSet.getString("author_name");
+			int author_id = resultSet.getInt("author_id");
+
+			return new MP3(mp3_id, mp3_name, new Author(author_id, author_name));
 		}
 	}
 }

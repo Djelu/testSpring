@@ -3,21 +3,18 @@ package com.fantasy.dao.objects;
 /**
  * Created by Djelu on 03.09.2017.
  */
-public class MP3 {
+public class Author {
 
     private int id;
     private String name;
-    private Author author;
 
-    public MP3(String name, Author author) {
+    public Author(String name) {
         this.name = name;
-        this.author = author;
     }
 
-    public MP3(int id, String name, Author author) {
+    public Author(int id, String name) {
         this.id = id;
         this.name = name;
-        this.author = author;
     }
 
     public int getId() {
@@ -32,12 +29,5 @@ public class MP3 {
     }
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 }

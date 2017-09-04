@@ -21,6 +21,7 @@ public interface MP3Dao {
     void delete(MP3 mp3);
 
     int getMP3Count();
+    int getIdAuthor(String name);
     Map<String, Integer> getStat();
 
     MP3 getMP3ByID(int id);
