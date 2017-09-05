@@ -20,10 +20,10 @@
         </fieldset>
         <footer>
             <label>
-                <input type="checkbox" tabindex="3"/>
-                Keep me logged in
+                <form:checkbox path="admin"/>
+                <form:label path="admin">Admin</form:label>
             </label>
-            <input type="submit" class="btnLogin" value="Login" tabindex="4"/>
+            <input type="submit" class="btnLogin" value="Login" tabindex="5"/>
         </footer>
     </form:form>
 </body>

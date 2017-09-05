@@ -29,11 +29,13 @@ public class LoginController {
 
     @RequestMapping(value = "/check-user", method = RequestMethod.POST)
     public ModelAndView checkUser(@ModelAttribute User user){
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main");
 
         modelAndView.addObject("user", user);
 
         return modelAndView;
+//        return new ModelAndView("main", "user", user);
     }
 }
