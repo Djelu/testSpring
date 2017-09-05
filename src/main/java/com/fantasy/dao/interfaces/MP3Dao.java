@@ -1,5 +1,6 @@
 package com.fantasy.dao.interfaces;
 
+import com.fantasy.dao.objects.Author;
 import com.fantasy.dao.objects.MP3;
 
 import java.util.List;
@@ -10,10 +11,11 @@ import java.util.Map;
  */
 public interface MP3Dao {
 
-    int insertAndGetCount(MP3 mp3);
-    int insertAndGetId(MP3 mp3);
-    void insert(List<MP3> mp3List);
-    void insert(MP3 mp3);
+    int insertAuthor(Author author);
+    int insertMP3AndGetCount(MP3 mp3);
+    int insertMP3AndGetId(MP3 mp3);
+    void insertMP3(List<MP3> mp3List);
+    void insertMP3(MP3 mp3);
     int insertList(List<MP3> mp3List);
     int updateList(List<MP3> mp3List);
 

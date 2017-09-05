@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.sql.DataSource;
-import javax.swing.*;
 
 import com.fantasy.dao.interfaces.MP3Dao;
 import com.fantasy.dao.objects.Author;
@@ -18,13 +17,14 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSourceUtils;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Component("sqliteDAO")
 public class SQLiteDAO implements MP3Dao {
@@ -42,7 +42,7 @@ public class SQLiteDAO implements MP3Dao {
 		this.insertMP3 = new SimpleJdbcInsert(dataSource).withTableName("mp3").usingColumns("name","author");
 	}
 
-	public void insert(MP3 mp3) {
+	public void insertMP3(MP3 mp3) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", mp3.getName());
 		params.addValue("author", mp3.getAuthor());
@@ -50,7 +50,7 @@ public class SQLiteDAO implements MP3Dao {
 		insertMP3.execute(params);
 	}
 
-	public int insertAndGetCount(MP3 mp3) {
+	public int insertMP3AndGetCount(MP3 mp3) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("name", mp3.getName());
 		params.addValue("author", mp3.getAuthor());
@@ -58,30 +58,35 @@ public class SQLiteDAO implements MP3Dao {
 		return insertMP3.execute(params);
 	}
 
-	@Transactional
-	public int insertAndGetId(MP3 mp3) {
-		String sqlAuhtor = "insert into author(name) values(:author_name)";
+	public int insertMP3AndGetId(MP3 mp3) {
 
-		KeyHolder keyHolder = new GeneratedKeyHolder();
+		int author_id = insertAuthor(mp3.getAuthor());
+
+		String sqlMP3 = "insert into mp3(name, author_id) values(:mp3_name, :author_id)";
 
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("author_name", mp3.getAuthor().getName());
-
-		jdbcTemplate.update(sqlAuhtor, params, keyHolder);
-		int author_id = keyHolder.getKey().intValue();
-
-		String sqlMP3 = "insert into mp3(name, author_id2) values(:mp3_name, :author_id)";
-
-		params = new MapSqlParameterSource();
 		params.addValue("mp3_name", mp3.getName());
 		params.addValue("author_id", author_id);
 		jdbcTemplate.update(sqlMP3, params);
 		return author_id;
 	}
 
-	public void insert(List<MP3> mp3List) {
+	public int insertAuthor(Author author) {
+
+		String sqlAuhtor = "insert into author(name) values(:author_name)";
+
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("author_name", author.getName());
+
+		jdbcTemplate.update(sqlAuhtor, params, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public void insertMP3(List<MP3> mp3List) {
 		for(MP3 mp3: mp3List){
-			insert(mp3);
+			insertMP3(mp3);
 		}
 	}
 
