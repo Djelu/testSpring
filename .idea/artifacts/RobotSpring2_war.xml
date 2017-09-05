@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RobotSpring2:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="RobotSpring2-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="RobotSpring2:war exploded" />
+    </root>
+  </artifact>
+</component>

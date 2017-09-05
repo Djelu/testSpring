@@ -14,17 +14,8 @@ import java.util.List;
  */
 public class Start {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("DAOContext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("MVCContext.xml");
 
-        MP3Dao mp3Dao = (MP3Dao) context.getBean("sqliteDAO");
-//        sqLiteDAO.insertWithJDBC();
-//        mp3Dao.insertMP3(new MP3("Rhapsody of Fire", "Emerald sword"));
-        List<MP3> mp3s = new ArrayList<>();
-//        mp3s.add(new MP3(1,"Song №4", new Author(1,"Black Eye Peace")));
-//        mp3s.add(new MP3(2,"Sunrise3", new Author(2,"Justin Timberlake")));
-        mp3s.add(new MP3(3,"Imago", new Author(3,"Catharsis")));
-        mp3s.add(new MP3(3,"Pururu", new Author(3,"Ururu")));
 
-        System.out.println(mp3Dao.insertMP3AndGetId(new MP3(3,"Imago", new Author(3,"Catharsis"))));
     }
 }
