@@ -3,7 +3,7 @@
 <html>
 <head>
     <style>
-        <%@include file="resources/css/home.css"%>
+        <%@include file="../../resources/css/home.css"%>
     </style>
     <title>Home</title>
 </head>
