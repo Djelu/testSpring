@@ -1,11 +1,18 @@
 package com.fantasy.mvc.objects;
 
+import javax.validation.constraints.Size;
+
 /**
  * Created by Djelu on 05.09.2017.
  */
 public class User {
+
+    @Size(min = 6, message = "Имя должно быть больше 6 знаков")
     private String name;
+
+    @Size(min = 5, max = 10, message = "Пароль должен быть от 5 до 10 знаков")
     private String password;
+
     private boolean admin;
 
     public String getName() {

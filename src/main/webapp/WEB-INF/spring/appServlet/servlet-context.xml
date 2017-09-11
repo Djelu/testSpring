@@ -15,12 +15,12 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/"/>
 
+    <context:component-scan base-package="com.fantasy.mvc"/>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/view/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
-    <context:component-scan base-package="com.fantasy.mvc"/>
 
     <!--<bean id="requestHundlerMapping" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">-->
         <!--<property name="interceptors">-->
@@ -30,12 +30,12 @@
         <!--</property>-->
     <!--</bean>-->
 
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/*"/>
-            <!--<bean class="com.fantasy.mvc.intercepters.CheckUserIntercepter"/>-->
-            <bean class="com.fantasy.mvc.intercepters.TimeIntercepter"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/*"/>-->
+            <!--&lt;!&ndash;<bean class="com.fantasy.mvc.intercepters.CheckUserIntercepter"/>&ndash;&gt;-->
+            <!--<bean class="com.fantasy.mvc.intercepters.TimeIntercepter"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
 
 </beans>

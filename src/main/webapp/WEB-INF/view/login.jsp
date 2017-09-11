@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <style>
@@ -14,15 +15,15 @@
         <fieldset class="boxBody">
             <form:label path="name">Name</form:label>
             <form:input path="name"/>
+            <form:errors path="name" cssClass="error"/>
 
             <form:label path="password">Password</form:label>
             <form:password path="password"/>
+            <form:errors path="password" cssClass="error"/>
         </fieldset>
         <footer>
-            <label>
-                <form:checkbox path="admin"/>
-                <form:label path="admin">Admin</form:label>
-            </label>
+            <form:checkbox path="admin"/>
+            <form:label path="admin">Admin</form:label>
             <input type="submit" class="btnLogin" value="Login" tabindex="5"/>
         </footer>
     </form:form>
